@@ -1,0 +1,39 @@
+{
+  "model": "DecisionTree",
+  "tree_depth": 32,
+  "n_leaves": 2255,
+  "cv_f1_mean": 0.7579,
+  "cv_f1_std": 0.0078,
+  "cv_precision_mean": 0.7547,
+  "cv_recall_mean": 0.7611,
+  "cv_accuracy_mean": 0.8919,
+  "test_f1": 0.77,
+  "test_precision": 0.7735,
+  "test_recall": 0.7665,
+  "test_accuracy": 0.8982,
+  "confusion_matrix": [
+    [
+      6551,
+      449
+    ],
+    [
+      467,
+      1533
+    ]
+  ],
+  "feature_importances": {
+    "previous_loan_defaults_on_file": 0.2942,
+    "loan_int_rate": 0.1645,
+    "loan_percent_income": 0.1525,
+    "person_income": 0.1387,
+    "credit_score": 0.0539,
+    "person_home_ownership": 0.043,
+    "loan_intent": 0.0371,
+    "loan_amnt": 0.0344,
+    "person_age": 0.0226,
+    "cb_person_cred_hist_length": 0.0203,
+    "person_emp_exp": 0.0197,
+    "person_education": 0.0127,
+    "person_gender": 0.0064
+  }
+}
