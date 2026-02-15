@@ -1,0 +1,111 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{soul}
+\usepackage{hyperref}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Poisonous Loan Approvals}
+
+\author{\IEEEauthorblockN{Jeet Purohit, Mhd Malek Kisanieh}
+\IEEEauthorblockA{\textit{Institute of AI and Machine Learning} \\
+\textit{Blekinge Tekniska Högskola} \\
+Karlskrona, Sweden \\
+jepu20@student.bth.se,
+mhki22@student.bth.se}
+}
+
+\maketitle
+
+\begin{abstract}
+This project investigates the vulnerability of machine learning-based loan approval systems to data poisoning attacks and evaluates whether anomaly detection can improve robustness. We train a Decision Tree classifier on clean loan application data, then simulate poisoning attacks through label flipping and data injection. An Isolation Forest model is applied to detect poisoned samples. We use explainability tools (LIME and ELI5) to analyze how poisoning alters model decision patterns. Our goal is to provide a structured experimental analysis of attack impact, defense effectiveness, and decision transparency in a financial machine learning context.
+\end{abstract}
+
+\section{Introduction}
+More and more companies are striving to modernize their systems, especially in the loan approval section. Many of these rely on machine learning models which are quick and to some extent reliable. If an AI model is used to approve or disapprove a loan, the person would want an explanation for that decision \cite{Molnar2025}. However, there are cases where attackers have bypassed these models by poisoning the training data. We want to set up a scenario where we have a decision tree model that decides if a loan should be approved or not based on the user features, poison the dataset and retrain the model, simulating an attack phase. We will then train an isolation forest model to detect these poisoned samples and evaluate whether the model detected the right anomalies. 
+
+
+\section{Project goal}
+
+The goal of this project is to investigate how vulnerable a loan approval system is to data poisoning attacks and to evaluate whether anomaly detection can improve its robustness. Loan approval models operate in high-stakes environments where incorrect decisions may lead to significant financial losses. If an attacker succeeds in manipulating the training data, the model may learn misleading patterns and approve loans that should otherwise be rejected.
+
+\subsection{Aim}
+
+The aim of this project is to simulate realistic data poisoning scenarios in a supervised loan approval setting and to systematically measure their impact on model performance. We want to understand why the models rejected/approved the loans.
+
+\subsection{Objective}
+
+The objectives of this project are:
+
+\begin{itemize}
+    \item To build a baseline Decision Tree classifier trained on clean loan application data.
+    \item To implement controlled data poisoning attacks, such as label manipulation and data injection.
+    \item To quantify performance degradation under different poisoning levels.
+    \item To apply Isolation Forest as an anomaly detection mechanism to identify and remove suspicious samples.
+    \item To compare clean, poisoned, and defended models using performance metrics and explainability analysis.
+    
+\end{itemize}
+
+\subsection{Expected outcome}
+
+We expect to demonstrate how sensitive loan approval models are to training data manipulation and whether anomaly detection can partially restore robustness. The project aims to provide a structured experimental analysis of attack impact and defense effectiveness in a financial machine learning context.
+
+
+\section{Research question}
+To what extent can explainability methods (LIME and ELI5) reveal the decision logic of a loan approval model before and after data poisoning attacks, and can Isolation Forest reliably identify poisoned samples in the training data?
+
+\section{Method}
+\subsection{Dataset tools}
+We will perform basic outlier cleaning, as the dataset contains unrealistic data points such as applicants aged 122 years old. 
+The dataset classes are imbalanced (35,000 rejected and 10,000 approved), which mirrors real-world loan approval rates. Most loan applications are rejected, but this imbalance could potentially make the model prone to overfitting. We will use class weights to address this issue.
+For the data poisoning part, we will implement two attack strategies: (1) label flipping, where we flip 5-15\% of rejected loans to approved, and (2) data injection, where we inject synthetic fraudulent samples that appear legitimate. We will maintain ground truth labels for all poisoned samples to enable accurate evaluation. These poisoned samples will be compared with the anomalies detected by the Isolation Forest to measure detection accuracy. 
+\subsection{Evaluation tools}
+We will evaluate model performance using multiple metrics: F1 score, Precision, Recall (Sensitivity), Specificity, and Confusion Matrix.
+Specificity will provide insight into how many rejected loans our model correctly predicted. \\
+For the poisoning attacks, we will measure performance degradation by comparing metrics before and after poisoning. Additionally, we will evaluate the Isolation Forest's detection capability using precision and recall on the known poisoned samples, treating anomaly detection as a binary classification task.
+\subsection{Models}
+We will be using Isolation Forest and Decision Tree because these are a good starting point for interpretation and the use of the explainable tools during the model decision investigation.
+\subsection{Explainable tools}
+We will use LIME for individual prediction explanations and ELI5 for visualizing feature importance across the model. We need to investigate how effectively these tools explain model decisions, balancing between too much detail and too little. Our goal is to extract relevant, actionable explanations that clarify why specific loans were approved or rejected, and how poisoning affects these decision patterns.
+
+
+\section{Risk and solutions}
+\subsection{Model exceeds performance}
+The model's prediction score may not be affected by the poisoned data samples as expected. In this case, we will either try alternative poisoning methods or increase the poisoning ratio to demonstrate measurable impact.
+\subsection{Explainable technique}
+Since we are new to these explainability tools, learning them may consume more time than expected. This time could alternatively be spent on model tuning or data preprocessing.\\
+Another potential issue is group disagreement about interpreting the results from these tools. To mitigate this, we will establish clear interpretation criteria and evaluation guidelines before beginning the experimental phase.
+
+
+
+\begin{thebibliography}{00}
+\bibitem{Molnar2025}
+Molnar, C. (2025). Interpretable Machine Learning: \\ A Guide for Making Black Box Models Explainable (3rd ed.).\\
+\url{https://christophm.github.io/interpretable-ml-book/}
+\bibitem{scikitlearn}
+Scikit-learn. \url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html}
+\bibitem{lectureslides}
+Advanced Machine Learning Course Materials, Blekinge Institute of Technology, 2026.
+\bibitem{srivastava2024}
+Srivastava, M., et al. (2024). Data Poisoning Attacks in the Training Phase of Machine Learning Models: A Review. 
+AICS 2024. Retrieved from \url{https://ceur-ws.org/Vol-3910/aics2024_p10.pdf}
+\bibitem{chen2023}
+Chen, Y.; Wu, Z. Financial Fraud Detection of Listed Companies in China: A Machine Learning Approach. Sustainability 2023, 15, 105. \url{https://doi.org/10.3390/su15010105}
+
+\bibitem{kumar2022}
+Kumar, S.; Ahmed, R.; Bharany, S.; Shuaib, M.; Ahmad, T.; Tag Eldin, E.; Rehman, A.U.; Shafiq, M. Exploitation of Machine Learning Algorithms for Detecting Financial Crimes Based on Customers’ Behavior. Sustainability 2022, 14, 13875. \url{https://doi.org/10.3390/su142113875}
+
+
+\end{thebibliography}
+
+\end{document}
