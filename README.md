@@ -1,0 +1,2 @@
+* run cells in order.
+* code that is commented in a seperate cell are for showing how we tested the diffrent combination with GridSearchCV optimizer. we have in the next cell used the best parameters for faster runtime.
